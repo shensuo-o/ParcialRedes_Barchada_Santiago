@@ -21,6 +21,14 @@ public class Player : NetworkBehaviour
     [SerializeField] public bool isJumping;
     [SerializeField] private bool isGrounded;
 
+    //variables para el dash
+    [SerializeField] private bool canDash;
+    [SerializeField] private bool isDashing;
+    [SerializeField] private float dashingPower;
+    [SerializeField] private float dashingTime;
+    [SerializeField] private float dashingCooldown;
+    [SerializeField] private bool dashRight;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,12 +36,35 @@ public class Player : NetworkBehaviour
 
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         HorizontalInput = Input.GetAxisRaw("Horizontal");
         Jump();
+        if (HorizontalInput == 1)
+        {
+            dashRight = true;
+        }
+        else if (HorizontalInput == -1)
+        {
+            dashRight = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     public void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         Movement(HorizontalInput);
     }
 
@@ -72,6 +103,34 @@ public class Player : NetworkBehaviour
             isJumping = false;
         }
     }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+
+        if (dashRight)
+        {
+            rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        }
+        else if (!dashRight)
+        {
+            rb.velocity = new Vector2(-transform.localScale.x * dashingPower, 0f);
+        }
+
+        yield return new WaitForSeconds(dashingTime);
+
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashingCooldown);
+
+        canDash = true;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
