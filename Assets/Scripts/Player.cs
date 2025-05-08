@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     //stats
     [SerializeField] public float HP;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
         Jump();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         Movement(HorizontalInput);
     }
