@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using System;
 
 public class Weapon : NetworkBehaviour
 {
@@ -11,16 +12,37 @@ public class Weapon : NetworkBehaviour
 
     [SerializeField] private GameObject bulletPref;
     [SerializeField] private Transform barrel;
-    void  Update()
+    [SerializeField] private bool Fire;
+
+    [SerializeField] private Vector2 Dir;
+
+
+    private void Update()
     {
-        Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire = true;
+        }
+
+        Dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority)
+        {
+            return; 
+        }
+        
+        //Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float angle = Mathf.Atan2(Dir.y, Dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = rotation;  
 
-        if (Input.GetMouseButtonDown(0))
+        if (Fire)
         {
-            Instantiate(bulletPref, barrel.transform.position, barrel.transform.rotation);
+            NetworkObject bullet = Runner.Spawn(bulletPref, barrel.transform.position, barrel.transform.rotation);
+            Fire = false;
         }
 
         if (player.HorizontalInput == 1)

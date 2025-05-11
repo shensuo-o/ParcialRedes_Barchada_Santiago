@@ -8,11 +8,13 @@ public class Player : NetworkBehaviour
     //stats
     [SerializeField] public float HP;
     [SerializeField] public float MaxHP;
-    [SerializeField] private float Speed;
+
+#region Variables Movimiento
 
     //variables para el movimiento
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public float HorizontalInput;
+    [SerializeField] private float Speed;
 
     //variables para el salto
     [SerializeField] private float jumpForce;
@@ -23,26 +25,53 @@ public class Player : NetworkBehaviour
 
     //variables para el dash
     [SerializeField] private bool canDash;
+    [SerializeField] private bool startDash;
     [SerializeField] private bool isDashing;
     [SerializeField] private float dashingPower;
     [SerializeField] private float dashingTime;
     [SerializeField] private float dashingCooldown;
     [SerializeField] private bool dashRight;
 
-    private void Awake()
+#endregion
+
+    public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    public void Update()
     {
+        if (Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+        }
+
+        if (Input.GetButtonUp("Jump"))
+        {
+            isJumping = false;
+        }
+
+        HorizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            startDash = true;
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority)
+        {
+            return;
+        }
         if (isDashing)
         {
             return;
         }
 
-        HorizontalInput = Input.GetAxisRaw("Horizontal");
         Jump();
+
         if (HorizontalInput == 1)
         {
             dashRight = true;
@@ -52,21 +81,15 @@ public class Player : NetworkBehaviour
             dashRight = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (startDash && canDash)
         {
             StartCoroutine(Dash());
-        }
-    }
-
-    public void FixedUpdate()
-    {
-        if (isDashing)
-        {
-            return;
         }
 
         Movement(HorizontalInput);
     }
+
+#region Funciones Movimiento
 
     private void Movement(float dir)//Toma la variable de direccion y la usa para moverse con velocity del rigidbody.
     {
@@ -77,7 +100,7 @@ public class Player : NetworkBehaviour
 
     private void Jump()//Salto que se hace mas alto contra mas se sostiene apretado el boton.
     {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && isJumping)
         {
             isJumping = true;
             jumpTime = JumpStartTime;
@@ -90,17 +113,12 @@ public class Player : NetworkBehaviour
             if (jumpTime > 0)
             {
                 rb.velocity = Vector2.up * jumpForce;
-                jumpTime -= Time.deltaTime;
+                jumpTime -= Runner.DeltaTime;
             }
             else
             {
                 isJumping = false;
             }
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            isJumping = false;
         }
     }
 
@@ -114,11 +132,13 @@ public class Player : NetworkBehaviour
 
         if (dashRight)
         {
-            rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+            //rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+            rb.AddForce(new Vector2(transform.localScale.x * dashingPower, 0f));
         }
         else if (!dashRight)
         {
-            rb.velocity = new Vector2(-transform.localScale.x * dashingPower, 0f);
+            //rb.velocity = new Vector2(-transform.localScale.x * dashingPower, 0f);
+            rb.AddForce(new Vector2(-transform.localScale.x * dashingPower, 0f));
         }
 
         yield return new WaitForSeconds(dashingTime);
@@ -129,8 +149,32 @@ public class Player : NetworkBehaviour
         yield return new WaitForSeconds(dashingCooldown);
 
         canDash = true;
+        startDash = false;
     }
 
+    #endregion
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_TakeDamage(float dmg)
+    {
+        TakeDamage(dmg);
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        HP -= dmg;
+
+        if (HP <= 0f)
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        HP = 0;
+        Runner.Despawn(Object);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -141,7 +185,7 @@ public class Player : NetworkBehaviour
 
         if (collision.gameObject.layer == 10)
         {
-            HP = 0;
+            Death();
         }
     }
 
