@@ -6012,7 +6012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5503311241891401613, guid: a48f336f16cde2f4386850514c105fe6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6301274488654395002, guid: a48f336f16cde2f4386850514c105fe6, type: 3}
       propertyPath: SyncScale
