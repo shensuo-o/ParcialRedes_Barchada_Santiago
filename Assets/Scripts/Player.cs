@@ -32,11 +32,16 @@ public class Player : NetworkBehaviour
     [SerializeField] private float dashingCooldown;
     [SerializeField] private bool dashRight;
 
-#endregion
+    #endregion
+
+    public Animator bodyAnimator;
+    public SpriteRenderer bodySpriteRenderer;
 
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
+        bodyAnimator = GetComponentInChildren<Animator>();
+        bodySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void Update()
@@ -57,6 +62,8 @@ public class Player : NetworkBehaviour
         {
             startDash = true;
         }
+
+        bodyAnimator.SetBool("isRunning", Mathf.Abs(rb.velocity.x) > 0.1f);
     }
 
     public override void FixedUpdateNetwork()
@@ -75,10 +82,12 @@ public class Player : NetworkBehaviour
         if (HorizontalInput == 1)
         {
             dashRight = true;
+            bodySpriteRenderer.flipX = false;
         }
         else if (HorizontalInput == -1)
         {
             dashRight = false;
+            bodySpriteRenderer.flipX = true;
         }
 
         if (startDash && canDash)
@@ -87,6 +96,7 @@ public class Player : NetworkBehaviour
         }
 
         Movement(HorizontalInput);
+        
     }
 
 #region Funciones Movimiento
@@ -172,6 +182,7 @@ public class Player : NetworkBehaviour
 
     public void Death()
     {
+        bodyAnimator.SetBool("isDead", true);
         HP = 0;
         Runner.Despawn(Object);
     }

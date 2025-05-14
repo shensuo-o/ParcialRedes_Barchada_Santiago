@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9035017388685636751}
   - component: {fileID: 6326506219097408979}
   - component: {fileID: 6312056220193123011}
+  - component: {fileID: 6680321530596542583}
   m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
@@ -151,7 +152,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198120073642016423}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8f6b8fb65a5c0b3468aac457f16ff742, type: 2}
   m_CullingMode: 0
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198120073642016423}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
@@ -182,6 +183,25 @@ MonoBehaviour:
   StateHashes: 0000000015b524dc47ef5bf50b49257e11d81f9452834c63b940c49e
   TriggerHashes: 00000000
   TotalWords: 1
+--- !u!114 &6680321530596542583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198120073642016423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 697668055
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 6312056220193123011}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &1228599874720368752
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,10 +277,8 @@ GameObject:
   - component: {fileID: 3079173229318664043}
   - component: {fileID: 1659938010976131347}
   - component: {fileID: 1512917592278330239}
-  - component: {fileID: 293557921862863938}
   - component: {fileID: 1192671347905707150}
   - component: {fileID: 7811443518228365918}
-  - component: {fileID: 5642235025191817272}
   - component: {fileID: 6301274488654395002}
   m_Layer: 8
   m_Name: Player1
@@ -318,6 +336,7 @@ MonoBehaviour:
   dashingTime: 0.5
   dashingCooldown: 2
   dashRight: 0
+  bodyAnimator: {fileID: 0}
 --- !u!70 &3079173229318664043
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -396,32 +415,13 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects:
+  - {fileID: 6680321530596542583}
   - {fileID: 8971925823920227179}
   NetworkedBehaviours:
   - {fileID: 3173262605499047738}
-  - {fileID: 293557921862863938}
   - {fileID: 7811443518228365918}
   - {fileID: 6301274488654395002}
-  - {fileID: 6312056220193123011}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &293557921862863938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5503311241891401613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 5642235025191817272}
-  ApplyTiming: 2
-  SyncSettings: 79
-  StateHashes: 0000000015b524dc47ef5bf50b49257e11d81f9452834c63b940c49e
-  TriggerHashes: 00000000
-  TotalWords: 1
 --- !u!114 &1192671347905707150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,27 +461,6 @@ MonoBehaviour:
   Hitboxes:
   - {fileID: 1192671347905707150}
   - {fileID: 9035017388685636751}
---- !u!95 &5642235025191817272
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5503311241891401613}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f6b8fb65a5c0b3468aac457f16ff742, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6301274488654395002
 MonoBehaviour:
   m_ObjectHideFlags: 0
