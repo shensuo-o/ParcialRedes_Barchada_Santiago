@@ -10,7 +10,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] GameObject _winImage;
     [SerializeField] GameObject _loseImage;
 
-    List<PlayerRef> _clients;
+    [SerializeField] List<PlayerRef> _clients;
 
     private void Awake()
     {

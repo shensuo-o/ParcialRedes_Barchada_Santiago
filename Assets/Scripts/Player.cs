@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using Unity.VisualScripting;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using System;
 
 public class Player : NetworkBehaviour
 {
     //stats
-    [SerializeField] public float HP;
+    [SerializeField] [Networked, OnChangedRender(nameof(UpdateLifeFeedback))] float HP { get; set; }
     [SerializeField] public float MaxHP;
 
 #region Variables Movimiento
@@ -41,6 +40,7 @@ public class Player : NetworkBehaviour
     public SpriteRenderer bodySpriteRenderer;
 
     public event Action OnDespawn;
+    public event Action<float> OnLifeUpdate;
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +50,9 @@ public class Player : NetworkBehaviour
         {
             Camera.main.GetComponent<CameraFollow>()?.SetTarget(transform);
         }
+        GameManager.Instance.AddToList(this);
+        HPbarManager.Instance.CreateLifeBar(this);
+        HP = MaxHP;
     }
 
     public void Update()
@@ -193,6 +196,11 @@ public class Player : NetworkBehaviour
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
         OnDespawn?.Invoke();
+    }
+
+    void UpdateLifeFeedback()
+    {
+        OnLifeUpdate(HP / MaxHP);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
