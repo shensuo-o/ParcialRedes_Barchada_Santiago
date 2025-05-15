@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using Unity.VisualScripting;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using System;
 
 public class Player : NetworkBehaviour
 {
@@ -37,11 +40,16 @@ public class Player : NetworkBehaviour
     public Animator bodyAnimator;
     public SpriteRenderer bodySpriteRenderer;
 
+    public event Action OnDespawn;
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
         bodyAnimator = GetComponentInChildren<Animator>();
         bodySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (HasStateAuthority)
+        {
+            Camera.main.GetComponent<CameraFollow>()?.SetTarget(transform);
+        }
     }
 
     public void Update()
@@ -167,11 +175,6 @@ public class Player : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_TakeDamage(float dmg)
     {
-        TakeDamage(dmg);
-    }
-
-    public void TakeDamage(float dmg)
-    {
         HP -= dmg;
 
         if (HP <= 0f)
@@ -183,8 +186,21 @@ public class Player : NetworkBehaviour
     public void Death()
     {
         bodyAnimator.SetBool("isDead", true);
-        HP = 0;
+        GameManager.Instance.RPC_Defeat(Runner.LocalPlayer);
         Runner.Despawn(Object);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        OnDespawn?.Invoke();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            Death();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -192,11 +208,6 @@ public class Player : NetworkBehaviour
         if (collision.gameObject.layer == 6)
         {
             isGrounded = true;
-        }
-
-        if (collision.gameObject.layer == 10)
-        {
-            Death();
         }
     }
 

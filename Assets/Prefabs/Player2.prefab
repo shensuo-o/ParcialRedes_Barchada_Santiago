@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 9035017388685636751}
   - component: {fileID: 6326506219097408979}
   - component: {fileID: 6312056220193123011}
-  - component: {fileID: 6680321530596542583}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1442216141, guid: 8f7a60065e3984c489b9c4d41bc3dc4e, type: 3}
+  m_Sprite: {fileID: -150523396, guid: 0c187a32c5bde4747be8d00770b07403, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,7 +121,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 2.5}
   m_Direction: 0
 --- !u!114 &9035017388685636751
 MonoBehaviour:
@@ -140,7 +139,7 @@ MonoBehaviour:
   SphereRadius: 0
   CapsuleRadius: 0.5
   BoxExtents: {x: 0, y: 0, z: 0}
-  CapsuleExtents: 2
+  CapsuleExtents: 2.5
   Offset: {x: 0, y: 0, z: 0}
   Root: {fileID: 7811443518228365918}
   GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -183,25 +182,6 @@ MonoBehaviour:
   StateHashes: 0000000015b524dc47ef5bf50b49257e11d81f9452834c63b940c49e
   TriggerHashes: 00000000
   TotalWords: 1
---- !u!114 &6680321530596542583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198120073642016423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 154685427
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 6312056220193123011}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1 &1228599874720368752
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6142198688368102555}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,6 +318,7 @@ MonoBehaviour:
   dashRight: 0
   bodyAnimator: {fileID: 0}
   bodySpriteRenderer: {fileID: 0}
+  Layer: 11
 --- !u!70 &3079173229318664043
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -371,7 +352,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.9, y: 1.9}
+  m_Size: {x: 0.9, y: 2.35}
   m_Direction: 0
 --- !u!50 &1659938010976131347
 Rigidbody2D:
@@ -412,16 +393,16 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 488555838
+  SortKey: 3294548482
   ObjectInterest: 1
   Flags: 262145
   NestedObjects:
-  - {fileID: 6680321530596542583}
   - {fileID: 8971925823920227179}
   NetworkedBehaviours:
   - {fileID: 3173262605499047738}
   - {fileID: 7811443518228365918}
   - {fileID: 6301274488654395002}
+  - {fileID: 6312056220193123011}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &1192671347905707150
 MonoBehaviour:
@@ -439,7 +420,7 @@ MonoBehaviour:
   SphereRadius: 0
   CapsuleRadius: 0.45
   BoxExtents: {x: 0, y: 0, z: 0}
-  CapsuleExtents: 1.9
+  CapsuleExtents: 2.35
   Offset: {x: 0, y: 0, z: 0}
   Root: {fileID: 7811443518228365918}
   GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -456,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: 3
-  BroadRadius: 0.95
+  BroadRadius: 1.25
   Offset: {x: 0, y: 0, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
@@ -495,7 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3503850472113776514}
   - component: {fileID: 718602568444565896}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +539,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -144335857, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  m_Sprite: {fileID: -353751291, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -612,7 +593,7 @@ GameObject:
   - component: {fileID: 3028249241725825964}
   - component: {fileID: 8971925823920227179}
   - component: {fileID: 4930924878637648221}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 589451595
+  SortKey: 3395444239
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -704,13 +685,13 @@ GameObject:
   - component: {fileID: 5604160805608091958}
   - component: {fileID: 8312855090063864774}
   - component: {fileID: 124768674891699707}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &126319036484301550
 Transform:
   m_ObjectHideFlags: 0

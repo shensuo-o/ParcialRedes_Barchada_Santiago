@@ -29,7 +29,12 @@ public class Bullet : NetworkBehaviour
     {
         if(collision.gameObject.layer == Layer)
         {
-            collision.gameObject.GetComponent<Player>().RPC_TakeDamage(Damage);
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
+            {
+                player.RPC_TakeDamage(Damage);
+            }
+            //collision.gameObject.GetComponent<Player>().RPC_TakeDamage(Damage);
             Runner.Despawn(this.Object);
         }
     }
