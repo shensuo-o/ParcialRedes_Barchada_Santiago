@@ -72,9 +72,7 @@ public class Player : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             startDash = true;
-        }
-
-        bodyAnimator.SetBool("isRunning", Mathf.Abs(rb.velocity.x) > 0.1f);
+        }      
     }
 
     public override void FixedUpdateNetwork()
@@ -107,7 +105,7 @@ public class Player : NetworkBehaviour
         }
 
         Movement(HorizontalInput);
-        
+        bodyAnimator.SetBool("isRunning", Mathf.Abs(rb.velocity.x) > 0.1f);
     }
 
 #region Funciones Movimiento

@@ -137,9 +137,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   SphereRadius: 0
-  CapsuleRadius: 0.5
+  CapsuleRadius: 0.75
   BoxExtents: {x: 0, y: 0, z: 0}
-  CapsuleExtents: 2.5
+  CapsuleExtents: 3.6
   Offset: {x: 0, y: 0, z: 0}
   Root: {fileID: 7811443518228365918}
   GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -277,8 +277,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3903147739610380193}
   - {fileID: 126319036484301550}
@@ -299,13 +299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486a5516fa3b874489a635b071938bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _HP: 0
   MaxHP: 100
   rb: {fileID: 0}
   HorizontalInput: 0
   Speed: 6
-  jumpForce: 9
-  JumpStartTime: 0.5
+  jumpForce: 10
+  JumpStartTime: 1
   jumpTime: 0
   isJumping: 0
   isGrounded: 0
@@ -318,7 +318,6 @@ MonoBehaviour:
   dashRight: 0
   bodyAnimator: {fileID: 0}
   bodySpriteRenderer: {fileID: 0}
-  Layer: 13
 --- !u!70 &3079173229318664043
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -352,7 +351,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.9, y: 2.35}
+  m_Size: {x: 1, y: 2.4}
   m_Direction: 0
 --- !u!50 &1659938010976131347
 Rigidbody2D:
@@ -418,9 +417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   SphereRadius: 0
-  CapsuleRadius: 0.45
+  CapsuleRadius: 0.6
   BoxExtents: {x: 0, y: 0, z: 0}
-  CapsuleExtents: 2.35
+  CapsuleExtents: 3.3
   Offset: {x: 0, y: 0, z: 0}
   Root: {fileID: 7811443518228365918}
   GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -437,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: 3
-  BroadRadius: 1.25
+  BroadRadius: 1.8
   Offset: {x: 0, y: 0, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
